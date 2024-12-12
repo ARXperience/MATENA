@@ -9,44 +9,32 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            position: relative; /* Asegura el contexto para posicionar elementos */
         }
-        .image-overlay {
+        .image-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh; /* Ocupa toda la pantalla */
-            z-index: 10; /* Asegura que esté sobre el iframe */
-            transition: opacity 0.5s ease; /* Transición suave al desaparecer */
+            z-index: 100;
         }
-        .image-overlay.hidden {
-            opacity: 0;
-            pointer-events: none; /* Asegura que no interfiera con los clics después */
-        }
-        .image-overlay img {
+        .image-container img {
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ajusta la imagen sin distorsionarse */
+            height: 100%; /* Ocupa todo el alto de la pantalla */
+            object-fit: cover; /* Ajusta la imagen sin distorsión */
         }
         iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+            display: block;
             width: 100%;
             height: 100vh;
             border: none;
-            z-index: 0; /* Asegura que esté detrás de la superposición */
         }
     </style>
 </head>
 <body>
-    <!-- Imagen superpuesta -->
-    <div class="image-overlay" id="imageOverlay">
+    <div class="image-container" id="imageContainer">
         <img src="https://www.dropbox.com/scl/fi/dtmkj33n6kgscjd4uhw9b/Portada-Matena.png?rlkey=87o6d7yzkgw00dco0uehwj3er&st=zqw32k5g&dl=1" alt="Portada">
     </div>
-
-    <!-- Visor AR -->
     <iframe 
         src="https://mywebar.com/p/Project_10_fntso1carf" 
         id="arViewer"
@@ -54,29 +42,10 @@
     </iframe>
 
     <script>
-        // Selecciona la superposición de la imagen
-        const imageOverlay = document.getElementById('imageOverlay');
-
-        // Función para ocultar la imagen superpuesta
-        function hideOverlayAfterTimeout() {
-            setTimeout(() => {
-                imageOverlay.classList.add('hidden');
-            }, 7000); // 7 segundos
-        }
-
-        // Detecta cualquier interacción en el documento
-        const events = ['click', 'touchstart', 'keydown'];
-        events.forEach(eventType => {
-            document.body.addEventListener(eventType, () => {
-                hideOverlayAfterTimeout();
-            }, { once: true }); // Ejecuta el listener una sola vez
-        });
-
-        // Detecta actualizaciones de permisos o interacciones en el visor AR
-        const iframe = document.getElementById('arViewer');
-        iframe.addEventListener('load', () => {
-            iframe.contentWindow.document.body.addEventListener('click', hideOverlayAfterTimeout, { once: true });
-        });
+        // Ocultar la imagen después de 8 segundos
+        setTimeout(function() {
+            document.getElementById('imageContainer').style.display = 'none';
+        }, 8000); // 8000 milisegundos = 8 segundos
     </script>
 </body>
 </html>
