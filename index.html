@@ -44,7 +44,7 @@
 <body>
     <!-- Imagen superpuesta -->
     <div class="image-overlay" id="imageOverlay">
-        <img src="https://www.dropbox.com/scl/fi/lqqhyua0tzhfn6eiafo2d/Portada-Matena.png?rlkey=br8kxvaff9qrnawfnac5dhr6r&st=uyqozshe&dl=1" alt="Portada">
+        <img src="https://www.dropbox.com/scl/fi/dtmkj33n6kgscjd4uhw9b/Portada-matena.png?rlkey=87o6d7yzkgw00dco0uehwj3er&st=9joj0vek&dl=1" alt="Portada">
     </div>
 
     <!-- Visor AR -->
@@ -58,18 +58,22 @@
         // Selecciona la superposición de la imagen
         const imageOverlay = document.getElementById('imageOverlay');
 
-        // Funcionalidad para ocultar la imagen después de 8 segundos al hacer clic en un botón
-        function hideOverlayAfterButtonClick() {
+        // Función para ocultar la imagen superpuesta
+        function hideOverlayAfterTimeout() {
             setTimeout(() => {
                 imageOverlay.classList.add('hidden');
             }, 8000); // 8 segundos
         }
 
-        // Detecta clics en el botón dentro del visor AR
+        // Detecta cualquier clic en el documento
         document.body.addEventListener('click', (event) => {
             const target = event.target;
+
+            // Comprueba si el clic es en un botón con "Launch" o en el visor AR
             if (target.tagName === 'BUTTON' && target.textContent.includes('Launch')) {
-                hideOverlayAfterButtonClick();
+                hideOverlayAfterTimeout();
+            } else if (target.tagName === 'IFRAME') {
+                hideOverlayAfterTimeout();
             }
         });
     </script>
