@@ -19,7 +19,6 @@
             height: 100vh; /* Ocupa toda la pantalla */
             z-index: 10; /* Asegura que esté sobre el iframe */
             transition: opacity 0.5s ease; /* Transición suave al desaparecer */
-            pointer-events: none; /* Permite interactuar con el contenido detrás */
         }
         .image-overlay.hidden {
             opacity: 0;
@@ -44,7 +43,7 @@
 <body>
     <!-- Imagen superpuesta -->
     <div class="image-overlay" id="imageOverlay">
-        <img src="https://www.dropbox.com/scl/fi/dtmkj33n6kgscjd4uhw9b/Portada-matena.png?rlkey=87o6d7yzkgw00dco0uehwj3er&st=9joj0vek&dl=1" alt="Portada">
+        <img src="https://www.dropbox.com/scl/fi/lqqhyua0tzhfn6eiafo2d/Portada-Matena.png?rlkey=br8kxvaff9qrnawfnac5dhr6r&st=uyqozshe&dl=1" alt="Portada">
     </div>
 
     <!-- Visor AR -->
@@ -62,19 +61,21 @@
         function hideOverlayAfterTimeout() {
             setTimeout(() => {
                 imageOverlay.classList.add('hidden');
-            }, 8000); // 8 segundos
+            }, 7000); // 7 segundos
         }
 
-        // Detecta cualquier clic en el documento
-        document.body.addEventListener('click', (event) => {
-            const target = event.target;
+        // Detecta cualquier interacción en el documento
+        const events = ['click', 'touchstart', 'keydown'];
+        events.forEach(eventType => {
+            document.body.addEventListener(eventType, () => {
+                hideOverlayAfterTimeout();
+            }, { once: true }); // Ejecuta el listener una sola vez
+        });
 
-            // Comprueba si el clic es en un botón con "Launch" o en el visor AR
-            if (target.tagName === 'BUTTON' && target.textContent.includes('Launch')) {
-                hideOverlayAfterTimeout();
-            } else if (target.tagName === 'IFRAME') {
-                hideOverlayAfterTimeout();
-            }
+        // Detecta actualizaciones de permisos o interacciones en el visor AR
+        const iframe = document.getElementById('arViewer');
+        iframe.addEventListener('load', () => {
+            iframe.contentWindow.document.body.addEventListener('click', hideOverlayAfterTimeout, { once: true });
         });
     </script>
 </body>
