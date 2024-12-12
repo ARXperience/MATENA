@@ -15,30 +15,27 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh; /* Ocupa toda la pantalla */
+            height: 100vh; /* Ocupa toda la pantalla visible */
             z-index: 100;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none; /* Permite clics e interacciones con el contenido detrás */
-            transition: opacity 1s ease;
-        }
-        .image-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
+            pointer-events: none; /* Permite interacciones con elementos detrás, como el botón "Launch" */
         }
         .image-overlay img {
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ajusta la imagen sin distorsionarse */
-            object-position: center top; /* Ajusta la posición de la imagen */
+            height: auto;
+            max-height: 100vh; /* Ajusta la altura máxima para que se ajuste a la pantalla */
+            object-fit: cover; /* Asegura que la imagen no se deforme */
+            object-position: top; /* Ajusta la posición de la imagen */
         }
         iframe {
             display: block;
             width: 100%;
             height: 100vh;
             border: none;
+        }
+        .image-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
         }
     </style>
 </head>
@@ -56,15 +53,15 @@
     </iframe>
 
     <script>
-        // Detecta cuándo el usuario acepta los permisos y ejecuta la lógica
+        // Detecta cuándo el visor está listo
         const iframe = document.getElementById('arViewer');
         const imageOverlay = document.getElementById('imageOverlay');
 
         iframe.addEventListener('load', () => {
-            // Espera 8 segundos después de que se cargue el visor y desaparece la imagen
+            // Espera 8 segundos después de aceptar permisos
             setTimeout(() => {
                 imageOverlay.classList.add('hidden');
-            }, 8000); // 8000 milisegundos = 8 segundos
+            }, 8000); // 8 segundos
         });
     </script>
 </body>
