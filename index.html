@@ -11,7 +11,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 100vh; /* Para asegurar que todo ocupe la pantalla completa */
+            height: 100vh; /* Asegura que el contenido ocupe toda la pantalla */
         }
         .image-overlay {
             position: absolute;
@@ -55,15 +55,22 @@
     </iframe>
 
     <script>
-        // Detecta cuándo el visor está listo
+        // Detecta cuándo el visor está listo y la cámara está activa
         const iframe = document.getElementById('arViewer');
         const imageOverlay = document.getElementById('imageOverlay');
 
-        iframe.addEventListener('load', () => {
-            // Espera 8 segundos después de aceptar permisos
-            setTimeout(() => {
+        // Monitorea mensajes desde el iframe
+        window.addEventListener('message', (event) => {
+            // Verifica si el mensaje indica que la cámara está activa
+            if (event.data === 'camera-activated') {
+                // Oculta la superposición
                 imageOverlay.classList.add('hidden');
-            }, 8000); // 8 segundos
+            }
+        });
+
+        // Envía un mensaje al iframe para que active la cámara
+        iframe.addEventListener('load', () => {
+            iframe.contentWindow.postMessage('check-camera-status', '*');
         });
     </script>
 </body>
