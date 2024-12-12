@@ -19,6 +19,7 @@
             height: 100vh; /* Ocupa toda la pantalla */
             z-index: 10; /* Asegura que esté sobre el iframe */
             transition: opacity 0.5s ease; /* Transición suave al desaparecer */
+            pointer-events: none; /* Permite interactuar con el contenido detrás */
         }
         .image-overlay.hidden {
             opacity: 0;
@@ -43,7 +44,7 @@
 <body>
     <!-- Imagen superpuesta -->
     <div class="image-overlay" id="imageOverlay">
-        <img src="https://www.dropbox.com/scl/fi/lqqhyua0tzhfn6eiafo2d/Portada-Matena.png?rlkey=br8kxvaff9qrnawfnac5dhr6r&st=xr6anpfk&dl=1" alt="Portada">
+        <img src="https://www.dropbox.com/scl/fi/lqqhyua0tzhfn6eiafo2d/Portada-Matena.png?rlkey=br8kxvaff9qrnawfnac5dhr6r&st=uyqozshe&dl=1" alt="Portada">
     </div>
 
     <!-- Visor AR -->
@@ -57,16 +58,20 @@
         // Selecciona la superposición de la imagen
         const imageOverlay = document.getElementById('imageOverlay');
 
-        // Funcionalidad para ocultar la imagen después de 12 segundos al tocar la pantalla
-        function hideOverlayAfterTimeout() {
+        // Funcionalidad para ocultar la imagen después de 8 segundos al hacer clic en un botón
+        function hideOverlayAfterButtonClick() {
             setTimeout(() => {
                 imageOverlay.classList.add('hidden');
-            }, 12000); // 12 segundos
+            }, 8000); // 8 segundos
         }
 
-        // Agregar evento al tocar la pantalla o hacer clic
-        document.body.addEventListener('touchstart', hideOverlayAfterTimeout, { once: true });
-        document.body.addEventListener('click', hideOverlayAfterTimeout, { once: true });
+        // Detecta clics en el botón dentro del visor AR
+        document.body.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.tagName === 'BUTTON' && target.textContent.includes('Launch')) {
+                hideOverlayAfterButtonClick();
+            }
+        });
     </script>
 </body>
 </html>
