@@ -9,9 +9,6 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100vh; /* Para asegurar que todo ocupe la pantalla completa */
         }
         .image-overlay {
             position: absolute;
@@ -20,13 +17,14 @@
             width: 100%;
             height: 100vh; /* Ocupa toda la pantalla visible */
             z-index: 100;
-            pointer-events: none; /* Permite interacciones con elementos detrás */
+            pointer-events: none; /* Permite interacciones con elementos detrás, como el botón "Launch" */
         }
         .image-overlay img {
             width: 100%;
-            height: 100%; /* Ocupa toda la altura disponible */
-            object-fit: cover; /* Asegura que la imagen llene todo sin deformarse */
-            object-position: center; /* Centra la imagen */
+            height: auto;
+            max-height: 100vh; /* Ajusta la altura máxima para que se ajuste a la pantalla */
+            object-fit: cover; /* Asegura que la imagen no se deforme */
+            object-position: top; /* Ajusta la posición de la imagen */
         }
         iframe {
             display: block;
@@ -44,7 +42,7 @@
 <body>
     <!-- Imagen superpuesta -->
     <div class="image-overlay" id="imageOverlay">
-        <img src="https://www.dropbox.com/scl/fi/73xnwgzaj4wfaz6z426x2/Portada-2-final.png?rlkey=pxkp5pwwf9sxrv2yblw7gnxsk&st=bdeq21pi&dl=0" alt="Portada-2-final">
+        <img src="https://www.dropbox.com/scl/fi/73xnwgzaj4wfaz6z426x2/Portada-2-final.png?rlkey=pxkp5pwwf9sxrv2yblw7gnxsk&st=i9kweo8c&dl=1" alt="Portada">
     </div>
 
     <!-- Visor AR -->
