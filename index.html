@@ -13,7 +13,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000; /* Fondo negro para mejor visualización */
         }
         .container {
             position: relative;
@@ -32,17 +31,17 @@
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: 100; /* Superposición por encima del iframe */
+            background-color: transparent; /* Elimina cualquier oscurecimiento */
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 100; /* Se asegura de estar por encima del iframe */
-            background-color: rgba(0, 0, 0, 0.8); /* Oscurece el fondo para mejor contraste */
-            pointer-events: auto; /* Asegura que la superposición sea interactiva */
+            pointer-events: auto;
         }
         .image-overlay img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* Asegura que la imagen se ajuste sin deformarse */
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Imagen a pantalla completa sin deformarse */
         }
         .hide-button {
             position: absolute;
@@ -56,8 +55,20 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            z-index: 101; /* Encima de la imagen */
-            pointer-events: auto; /* Asegura que el botón sea clicable */
+            z-index: 101;
+        }
+        .loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 102;
+            display: none;
         }
         .image-overlay.hidden {
             opacity: 0;
@@ -78,19 +89,25 @@
         <!-- Imagen superpuesta con botón para ocultar -->
         <div class="image-overlay" id="imageOverlay">
             <img src="https://www.dropbox.com/scl/fi/lqqhyua0tzhfn6eiafo2d/Portada-Matena.png?rlkey=br8kxvaff9qrnawfnac5dhr6r&st=xdypcwkw&dl=1" alt="Portada">
+            <button class="hide-button" id="hideButton">Iniciar Visor AR</button>
         </div>
 
-        <button class="hide-button" id="hideButton">Iniciar Visor AR</button>
+        <!-- Mensaje de carga -->
+        <div class="loading-message" id="loadingMessage">Espere, cargando el servidor...</div>
     </div>
 
     <script>
         const imageOverlay = document.getElementById('imageOverlay');
         const hideButton = document.getElementById('hideButton');
+        const loadingMessage = document.getElementById('loadingMessage');
 
-        // Evento para ocultar la imagen al hacer clic en el botón
+        // Evento para ocultar la imagen y mostrar el mensaje de carga
         hideButton.addEventListener('click', () => {
             imageOverlay.classList.add('hidden');
-            hideButton.style.display = 'none'; // Oculta el botón después de hacer clic
+            loadingMessage.style.display = 'block';
+            setTimeout(() => {
+                loadingMessage.style.display = 'none';
+            }, 5000); // Oculta el mensaje después de 5 segundos
         });
     </script>
 </body>
