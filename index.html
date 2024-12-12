@@ -43,20 +43,6 @@
             height: 100%;
             object-fit: cover; /* Imagen a pantalla completa sin deformarse */
         }
-        .hide-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 14px 28px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 101;
-        }
         .loading-message {
             position: absolute;
             top: 50%;
@@ -86,10 +72,9 @@
             allow="camera; gyroscope; accelerometer; magnetometer; xr-spatial-tracking; microphone;">
         </iframe>
 
-        <!-- Imagen superpuesta con botón para ocultar -->
+        <!-- Imagen superpuesta -->
         <div class="image-overlay" id="imageOverlay">
             <img src="https://www.dropbox.com/scl/fi/lqqhyua0tzhfn6eiafo2d/Portada-Matena.png?rlkey=br8kxvaff9qrnawfnac5dhr6r&st=xdypcwkw&dl=1" alt="Portada">
-            <button class="hide-button" id="hideButton">Iniciar Visor AR</button>
         </div>
 
         <!-- Mensaje de carga -->
@@ -98,11 +83,10 @@
 
     <script>
         const imageOverlay = document.getElementById('imageOverlay');
-        const hideButton = document.getElementById('hideButton');
         const loadingMessage = document.getElementById('loadingMessage');
 
         // Evento para ocultar la imagen y mostrar el mensaje de carga
-        hideButton.addEventListener('click', () => {
+        imageOverlay.addEventListener('click', () => {
             imageOverlay.classList.add('hidden');
             loadingMessage.style.display = 'block';
             setTimeout(() => {
