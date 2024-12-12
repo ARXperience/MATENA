@@ -58,20 +58,26 @@
         const imageOverlay = document.getElementById('imageOverlay');
         const iframe = document.getElementById('arViewer');
 
-        // Verifica permisos de cámara automáticamente
-        iframe.addEventListener('load', () => {
-            // Intenta detectar cambios en permisos
-            navigator.permissions.query({ name: 'camera' }).then(permissionStatus => {
-                if (permissionStatus.state === 'granted') {
+        // Detecta la activación de la cámara al obtener el acceso al stream
+        async function checkCameraActivation() {
+            try {
+                // Solicita acceso a la cámara
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                if (stream) {
+                    // Si el stream está activo, oculta la imagen
                     imageOverlay.classList.add('hidden');
-                } else {
-                    permissionStatus.onchange = () => {
-                        if (permissionStatus.state === 'granted') {
-                            imageOverlay.classList.add('hidden');
-                        }
-                    };
+
+                    // Detiene el uso del stream para liberar la cámara
+                    stream.getTracks().forEach(track => track.stop());
                 }
-            });
+            } catch (error) {
+                console.error('Error al acceder a la cámara:', error);
+            }
+        }
+
+        // Escucha cuando el iframe está listo
+        iframe.addEventListener('load', () => {
+            checkCameraActivation();
         });
     </script>
 </body>
