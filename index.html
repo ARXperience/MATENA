@@ -1,29 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visor AR Personalizado</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        .header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50vh; /* La mitad de la altura de la pantalla */
-            background: #000;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Centrado vertical */
-            align-items: center;     /* Centrado horizontal */
-            z-index: 100;
-            transition: transform 0.3s ease;
+        transition: transform 0.3s ease;
         }
         .header.hidden {
             transform: translateY(-100%);
@@ -34,12 +9,16 @@
             height: 100vh;
             border: none;
         }
+        .header img {
+            max-width: 90%; /* Ajustar el ancho máximo */
+            max-height: 90%; /* Ajustar la altura máxima */
+            object-fit: contain; /* Asegurar que la imagen se ajuste sin distorsión */
+        }
     </style>
 </head>
 <body>
     <div class="header" id="header">
-        <h1>Mi Marca</h1>
-        <p>Explora este modelo en AR</p>
+        <img src="https://www.dropbox.com/scl/fi/lqqhyua0tzhfn6eiafo2d/Portada-Matena.png?rlkey=br8kxvaff9qrnawfnac5dhr6r&st=xdypcwkw&dl=1" alt="Mi Marca">
     </div>
     <iframe 
         src="https://mywebar.com/p/Project_10_fntso1carf" 
@@ -48,7 +27,7 @@
     </iframe>
 
     <script>
-        // Ocultar la cabecera después de 5 segundos (ajusta el tiempo según sea necesario)
+        // Ocultar la cabecera después de 8 segundos
         setTimeout(function() {
             document.getElementById('header').classList.add('hidden');
         }, 8000);  // 8000 milisegundos = 8 segundos
