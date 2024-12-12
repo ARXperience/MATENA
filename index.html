@@ -13,6 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #000; /* Fondo negro para mejor visualización */
         }
         .container {
             position: relative;
@@ -36,7 +37,7 @@
             justify-content: center;
             align-items: center;
             z-index: 100; /* Se asegura de estar por encima del iframe */
-            pointer-events: none; /* Permite interacción con el botón */
+            pointer-events: none; /* Permite que el botón sea clicable */
         }
         .image-overlay img {
             max-width: 100%;
@@ -45,10 +46,10 @@
         }
         .hide-button {
             position: absolute;
-            bottom: 20px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            padding: 12px 24px;
+            transform: translate(-50%, -50%);
+            padding: 14px 28px;
             font-size: 18px;
             background-color: #007bff;
             color: white;
