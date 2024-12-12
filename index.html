@@ -58,26 +58,19 @@
         const imageOverlay = document.getElementById('imageOverlay');
         const iframe = document.getElementById('arViewer');
 
-        // Detecta la activación de la cámara al obtener el acceso al stream
-        async function checkCameraActivation() {
-            try {
-                // Solicita acceso a la cámara
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                if (stream) {
-                    // Si el stream está activo, oculta la imagen
-                    imageOverlay.classList.add('hidden');
-
-                    // Detiene el uso del stream para liberar la cámara
-                    stream.getTracks().forEach(track => track.stop());
-                }
-            } catch (error) {
-                console.error('Error al acceder a la cámara:', error);
-            }
-        }
-
-        // Escucha cuando el iframe está listo
+        // Detecta interacción dentro del iframe
         iframe.addEventListener('load', () => {
-            checkCameraActivation();
+            const iframeDocument = iframe.contentWindow || iframe.contentDocument;
+            if (iframeDocument) {
+                // Espera cualquier clic o toque dentro del iframe
+                iframe.contentWindow.addEventListener('click', () => {
+                    imageOverlay.classList.add('hidden');
+                });
+
+                iframe.contentWindow.addEventListener('touchstart', () => {
+                    imageOverlay.classList.add('hidden');
+                });
+            }
         });
     </script>
 </body>
